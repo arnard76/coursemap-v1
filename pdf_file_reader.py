@@ -1,5 +1,7 @@
-from PyPDF2 import PdfReader, PdfWriter
+from PyPDF2 import PdfReader
 import json
+from define_topic import define_topic 
+
 filename = "coursebook_S12023.pdf"
 
 with open(filename, "rb") as f:
@@ -15,9 +17,13 @@ with open(filename, "rb") as f:
         else: 
             for index, child in enumerate(element):
                 element[index] = child['/Title']
-            outline.append({'name': last_parent.node['/Title'], 'childs': element})
+            outline.append({
+                'name': last_parent.node['/Title'], 
+                'definition': {'simple': define_topic(last_parent.node['/Title'])},
+                'childs': element, 
+                })
 
     print(outline)
 
     with open('out.json', 'w') as outline_file:
-        json.dump(outline, outline_file)
+        json.dump(outline, outline_file, indent=4)
