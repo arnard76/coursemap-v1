@@ -14,7 +14,7 @@ with open(filename, "rb") as f:
   
     for index, element in enumerate(r.outline):
         # element could be a topic or a sub-topic
-        if index%2==0:
+        if not type(element)==list:
             last_parent = element
         else: 
             for index, child in enumerate(element):
