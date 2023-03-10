@@ -49,7 +49,5 @@ with open(filename, "rb") as f:
                 'childs': element, 
                 })
 
-    print(outline)
-
-    with open(f'out{str(datetime.datetime.now()).replace(":", "_")}.json', 'w') as outline_file:
+    with open(f'example_output/out{str(datetime.datetime.now()).replace(":", "_")}.json', 'w') as outline_file:
         json.dump(outline, outline_file, indent=4)
