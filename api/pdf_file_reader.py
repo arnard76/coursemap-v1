@@ -2,8 +2,9 @@ from PyPDF2 import PdfReader
 import json
 from define_topic import define_topic 
 import datetime
+import os
 
-filename = "coursebook_S12023.pdf"
+filename = "example_pdfs/coursebook_S12023.pdf"
 
 with open(filename, "rb") as f:
     r = PdfReader(f)
@@ -49,5 +50,5 @@ with open(filename, "rb") as f:
                 'childs': element, 
                 })
 
-    with open(f'example_output/out{str(datetime.datetime.now()).replace(":", "_")}.json', 'w') as outline_file:
+    with open(f'example_output/{os.path.basename(filename).split(".json")[0]}out{str(datetime.datetime.now()).replace(":", "_")}.json', 'w') as outline_file:
         json.dump(outline, outline_file, indent=4)
