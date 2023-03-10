@@ -50,5 +50,5 @@ with open(filename, "rb") as f:
                 'childs': element, 
                 })
 
-    with open(f'example_output/{os.path.basename(filename).split(".json")[0]}out{str(datetime.datetime.now()).replace(":", "_")}.json', 'w') as outline_file:
+    with open(f'example_output/course{os.path.basename(filename).split(".pdf")[0]}--time{str(datetime.datetime.now()).replace(":", "_")}.json', 'w') as outline_file:
         json.dump(outline, outline_file, indent=4)
