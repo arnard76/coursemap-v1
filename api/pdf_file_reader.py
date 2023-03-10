@@ -16,7 +16,20 @@ with open(filename, "rb") as f:
     for index, element in enumerate(r.outline):
         # element could be a topic or a sub-topic
         if not type(element)==list:
+
             last_parent = element
+
+            if index != len(r.outline)-1 :
+                for elementv2 in r.outline[index+1:]:
+                    if type(elementv2) != list:
+                        next_topic_page = r.get_destination_page_number(elementv2) 
+                        break
+            else:
+                next_topic_page = len(r.pages)-1
+
+            content=""
+            for pageNum in range(r.get_destination_page_number(element), next_topic_page+1):
+                content+= r.pages[pageNum].extract_text()+"\n\n\n\n\n"
             outline.append({'name': element['/Title'], 'content':content })
         else: 
             for idx, child in enumerate(element):
