@@ -1,6 +1,7 @@
 <script>
   import Circle from "./Circle.svelte";
-  import { example as outline } from "./getOutline";
+  import { courses } from "./outlines";
+  export let courseId;
   export let topicName;
   import { onMount } from "svelte";
   import { Link } from "svelte-routing";
@@ -9,7 +10,9 @@
 
   onMount(() => (url = window.location.href));
 
-  $: topic = outline.find((topic) => topic.name === topicName);
+  $: topic = courses
+    .find((course) => course.id === courseId)
+    .outline.find((topic) => topic.name === topicName);
   let radius = 180;
 
   /**
@@ -36,16 +39,16 @@
 
 <div style="position: relative;">
   <Circle {radius} colour="transparent" />
-  <a href="/">
+  <a href={"/" + courseId}>
     <Circle radius={2} />
   </a>
-  {#each topic.childs as childTopic, index (childTopic)}
-    <Link to={topicName + "/" + childTopic}>
+  {#each topic.childs as childTopic, index (childTopic["name"])}
+    <Link to={courseId + "/" + topicName + "/" + childTopic["name"]}>
       <p
         class="sub-topic"
         style={calcPos(radius, (index * 360) / topic.childs.length)}
       >
-        {childTopic}
+        {childTopic["name"]}
       </p></Link
     >
   {/each}
