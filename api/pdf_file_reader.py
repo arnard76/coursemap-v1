@@ -17,6 +17,7 @@ with open(filename, "rb") as f:
         # element could be a topic or a sub-topic
         if not type(element)==list:
             last_parent = element
+            outline.append({'name': element['/Title'], 'content':content })
         else: 
             for idx, child in enumerate(element):
                 first_page = r.get_destination_page_number(child)
@@ -44,8 +45,7 @@ with open(filename, "rb") as f:
                 element[idx] = {'name': child['/Title'], "content": text_for_child_topic}
 
 
-            outline.append({
-                'name': last_parent.node['/Title'], 
+            outline[-1].update({
                 'definition': {'simple': define_topic(last_parent.node['/Title'])},
                 'childs': element, 
                 })
