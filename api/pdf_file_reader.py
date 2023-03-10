@@ -1,6 +1,7 @@
 from PyPDF2 import PdfReader
 import json
 from define_topic import define_topic 
+import datetime
 
 filename = "coursebook_S12023.pdf"
 
@@ -25,5 +26,5 @@ with open(filename, "rb") as f:
 
     print(outline)
 
-    with open('out.json', 'w') as outline_file:
+    with open(f'out{str(datetime.datetime.now()).replace(":", "_")}.json', 'w') as outline_file:
         json.dump(outline, outline_file, indent=4)
