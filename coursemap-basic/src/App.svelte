@@ -4,6 +4,7 @@
   import Topic from "./lib/Topic.svelte";
   import SubTopic from "./lib/SubTopic.svelte";
   import { Router, Link, Route } from "svelte-routing";
+  import AddNewCourse from "./lib/AddNewCourse.svelte";
   let url = "";
 </script>
 
@@ -17,5 +18,9 @@
     {#each courses as course (course.id)}
       <a href="/{course.id}"> <p>{course.id}</p></a>
     {/each}
+    <a href="/add-course">➕</a>
+  </Route>
+  <Route path="/add-course">
+    <AddNewCourse />
   </Route>
 </Router>
