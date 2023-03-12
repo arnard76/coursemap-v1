@@ -3,8 +3,10 @@ import json
 from define_topic import define_topic 
 import datetime
 import os
+from pdf_split import pdf_split
 
 filename = "example_pdfs/coursebook_S12023.pdf"
+course_id = "COMPSCI225"
 
 with open(filename, "rb") as f:
     r = PdfReader(f)
@@ -28,8 +30,11 @@ with open(filename, "rb") as f:
                 next_topic_page = len(r.pages)-1
 
             content=""
-            for pageNum in range(r.get_destination_page_number(element), next_topic_page+1):
+            first_page = r.get_destination_page_number(element)
+            print(first_page, next_topic_page)
+            for pageNum in range(first_page, next_topic_page+1):
                 content+= r.pages[pageNum].extract_text()+"\n\n\n\n\n"
+            pdf_split(filename, first_page, next_topic_page, f'../coursemap-basic/public/example_pdfs/{course_id}/'+element['/Title'])
             outline.append({'name': element['/Title'], 'content':content })
         else: 
             for idx, child in enumerate(element):
@@ -54,6 +59,9 @@ with open(filename, "rb") as f:
                 for pageNum in range(first_page, last_page+1):
                     page = r.pages[pageNum] 
                     text_for_child_topic+=page.extract_text()+"\n\n\n\n\n"
+
+                
+                pdf_split(filename, first_page, last_page, f'../coursemap-basic/public/example_pdfs/{course_id}/{last_parent.node["/Title"]}/{child["/Title"]}')
 
                 element[idx] = {'name': child['/Title'], "content": text_for_child_topic}
 
