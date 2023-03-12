@@ -22,5 +22,14 @@
     <Circle radius={2} />
   </a>
   <p>{subTopic.name}</p>
+
+  <iframe
+    title="{courseId} coursebook"
+    src="/example_pdfs/{courseId}/{subTopicWhole?.name ||
+      topicName + '/' + subTopicName}/fragment.pdf#toolbar=0"
+    width="100%"
+    height="380px"
+    style="opacity: 0.8;filter: invert(1);border:none; margin:0;width:100%;"
+  />
   <pre>{subTopic.content}</pre>
 </div>
